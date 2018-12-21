@@ -3,14 +3,6 @@ from ep_oms.models import Address, Product, LineItem, Order, Parcel, Shipment, C
 
 @application.shell_context_processor
 def make_shell_context():
-  return {
-    'db': db, 
-    'Address': Address, 
-    'Product': Product, 
-    'LineItem': LineItem, 
-    'Order': Order, 
-    'Parcel': Parcel, 
-    'Shipment': Shipment, 
-    'Carrier': Carrier, 
-    'Customer': Customer
-  }
+  return { 'db': db, 'Address': Address, 'Product': Product, 'LineItem': LineItem, \
+    'Order': Order, 'Parcel': Parcel, 'Shipment': Shipment, 'Carrier': Carrier, \
+    'Customer': Customer}
