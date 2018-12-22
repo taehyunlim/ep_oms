@@ -9,6 +9,6 @@ application.config.from_object(Config)
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
 login = LoginManager(application)
-login.logn_view = 'login'
+login.login_view = 'login'
 
 from ep_oms import routes, models
