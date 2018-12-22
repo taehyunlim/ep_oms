@@ -3,16 +3,26 @@
 <form action="" method="post" novalidate>
   {{ form.hidden_tag() }}
   <p>
-    {{ form.email.label }}<br />
-    {{ form.email(size=32) }}<br />
+    {{ form.email.label }}
+    {{ form.email(size=32) }}<br>
     {% for error in form.email.errors %}
     <span style="color: red;">[{{ error }}]</span> {% endfor %}
-  </p>
-  <p>
-    {{ form.name.label }}<br />
-    {{ form.name(size=32) }}<br />
+    {{ form.name.label }}
+    {{ form.name(size=32) }}<br>
     {% for error in form.name.errors %}
     <span style="color: red;">[{{ error }}]</span> {% endfor %}
+    {{ form.street1.label }}
+    {{ form.street1(size=32) }}<br>
+    {{ form.street2.label }}
+    {{ form.street2(size=32) }}<br>
+    {{ form.street3.label }}
+    {{ form.street3(size=32) }}<br>
+    {{ form.city.label }}
+    {{ form.city(size=32) }}<br>
+    {{ form.state.label }}
+    {{ form.state(size=32) }}<br>
+    {{ form.zip.label }}
+    {{ form.zip(size=32) }}<br>
   </p>
   <p>{{ form.submit() }}</p>
 </form>

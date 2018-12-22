@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from ep_oms import application, db
 from ep_oms.forms import AddressForm, LoginForm, SignupForm
-from ep_oms.models import Admin
+from ep_oms.models import Admin, Address
 
 
 @application.route('/')
@@ -57,6 +57,18 @@ def register():
 def address():
   form = AddressForm()
   if form.validate_on_submit():
-    flash(form.email.data)
-    return redirect(url_for('address'))
+    address = Address(
+      name = form.name.data,
+      email = form.email.data,
+      street1 = form.street1.data,
+      street2 = form.street2.data,
+      street3 = form.street3.data,
+      city = form.city.data,
+      state = form.state.data,
+      zip = form.zip.data
+    )
+    db.session.add(address)
+    db.session.commit()
+    flash("Address for {} successfully saved".format(form.name.data))
+    return redirect(url_for('index'))
   return render_template('address.html', title='Address', form=form)

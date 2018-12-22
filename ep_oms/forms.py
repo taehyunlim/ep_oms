@@ -30,12 +30,12 @@ class SignupForm(FlaskForm):
 class AddressForm(FlaskForm):
   email = StringField('Email', validators=[DataRequired(), Email()])
   name = StringField('Name', validators=[DataRequired()])
-  # street1 = StringField('Street 1', validators=[DataRequired(), Length(min=0, max=30)])
-  # street2 = StringField('Street 2', validators=[Length(min=0, max=30)])
-  # street3 = StringField('Street 3', validators=[Length(min=0, max=30)])
-  # city = StringField('City', validators=[DataRequired(), Length(min=0, max=30)])
-  # state = StringField('State', validators=[DataRequired(), Length(min=0, max=2)])
-  # zip = StringField('Zip', validators=[DataRequired(), Length(min=0, max=10)])
+  street1 = StringField('Street 1', validators=[DataRequired(), Length(min=0, max=30)])
+  street2 = StringField('Street 2', validators=[Length(min=0, max=30)])
+  street3 = StringField('Street 3', validators=[Length(min=0, max=30)])
+  city = StringField('City', validators=[DataRequired(), Length(min=0, max=30)])
+  state = StringField('State', validators=[DataRequired(), Length(min=0, max=2)])
+  zip = StringField('Zip', validators=[DataRequired(), Length(min=0, max=10)])
   submit = SubmitField('Save')
 
 class ProductForm(FlaskForm):
