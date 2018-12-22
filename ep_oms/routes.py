@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from ep_oms import application
-from ep_oms.forms import AddressForm, LoginForm
+from ep_oms import application, db
+from ep_oms.forms import AddressForm, LoginForm, SignupForm
 from ep_oms.models import Admin
 
 
@@ -37,6 +37,20 @@ def logout():
   logout_user()
   flash('Successfully signed out')
   return redirect(url_for('index'))
+
+@application.route('/signup', methods=['GET', 'POST'])
+def register():
+  if current_user.is_authenticated:
+    return redirect(url_for('index'))
+  form = SignupForm()
+  if form.validate_on_submit():
+    user = Admin(username=form.username.data, email=form.email.data)
+    user.set_password(form.pw.data)
+    db.session.add(user)
+    db.session.commit()
+    flash('Success')
+    return redirect(url_for('login'))
+  return render_template('signup.html', title='Signup', form=form)
 
 @application.route('/address', methods=['GET', 'POST'])
 @login_required
