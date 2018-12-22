@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField, FloatField
+from wtforms import StringField, BooleanField, SubmitField, FloatField, PasswordField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length, NumberRange
 # from ep_oms.models import Product
 
-class TestGetLabelForm(FlaskForm):
-  orderId = StringField('Order ID', validators=[DataRequired()])
-  isSelected = BooleanField('Select')
-  submit = SubmitField('Go')
+class LoginForm(FlaskForm):
+  username = StringField('Admin ID', validators=[DataRequired()])
+  password = PasswordField('PW', validators=[DataRequired()])
+  remember_me = BooleanField('Remember Me')
+  submit = SubmitField('Sign In')
 
 class AddressForm(FlaskForm):
   email = StringField('Email', validators=[DataRequired(), Email()])
