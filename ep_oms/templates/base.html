@@ -8,8 +8,14 @@
   </head>
   <body>
     <div>
-      EP_OMS: <a href="{{ url_for('index') }}">Main</a>
-      <a href="{{ url_for('address') }}">Address</a>
+      EP_OMS: 
+      <a href="{{ url_for('index') }}">Main</a>
+      <a href="{{ url_for('address') }}">Address</a> 
+      {% if current_user.is_anonymous %} 
+      <a href="{{ url_for('login') }}">Login</a> 
+      {% else %} 
+      <a href="{{ url_for('logout') }}">Logout</a> 
+      {% endif %}
     </div>
     <hr />
     {% with messages = get_flashed_messages() %} {% if messages %}
