@@ -55,7 +55,7 @@ def register():
 @application.route('/_admin_settings', methods=['GET', 'POST'])
 @login_required
 def _admin_settings():
-  form = AdminSettingsForm()
+  form = AdminSettingsForm(current_user.email)
   if form.validate_on_submit():
     current_user.email = form.email.data
     db.session.commit()

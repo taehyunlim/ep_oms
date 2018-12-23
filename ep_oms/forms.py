@@ -31,6 +31,16 @@ class AdminSettingsForm(FlaskForm):
   email = StringField('Email', validators=[DataRequired(), Email()])
   submit = SubmitField('Update')
 
+  def __init__(self, email, *args, **kwargs):
+    super(AdminSettingsForm, self).__init__(*args, **kwargs)
+    self.existing_email = email
+  
+  def validate_email(self, email):
+    if email.data != self.existing_email:
+      user = Admin.query.filter_by(email=self.email.data).first()
+      if user is not None:
+        raise ValidationError('Please use a different email.')
+
 class AddressForm(FlaskForm):
   email = StringField('Email', validators=[DataRequired(), Email()])
   name = StringField('Name', validators=[DataRequired()])
