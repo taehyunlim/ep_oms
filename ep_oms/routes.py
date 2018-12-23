@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from ep_oms import application, db
-from ep_oms.forms import AddressForm, LoginForm, SignupForm
+from ep_oms.forms import AddressForm, LoginForm, SignupForm, AdminSettingsForm
 from ep_oms.models import Admin, Address
 
 
@@ -48,9 +48,22 @@ def register():
     user.set_password(form.pw.data)
     db.session.add(user)
     db.session.commit()
-    flash('Success')
+    flash('Registered successfully')
     return redirect(url_for('login'))
   return render_template('signup.html', title='Signup', form=form)
+
+@application.route('/_admin_settings', methods=['GET', 'POST'])
+@login_required
+def _admin_settings():
+  form = AdminSettingsForm()
+  if form.validate_on_submit():
+    current_user.email = form.email.data
+    db.session.commit()
+    flash('Updated successfully')
+    return redirect(url_for('_admin_settings'))
+  elif request.method == 'GET':
+    form.email.data = current_user.email
+  return render_template('_admin_settings.html', title='Admin Settings', form=form)
 
 @application.route('/address', methods=['GET', 'POST'])
 @login_required

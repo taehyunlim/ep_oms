@@ -26,6 +26,10 @@ class SignupForm(FlaskForm):
     user_by_email = Admin.query.filter_by(email=email.data).first()
     if user_by_email is not None:
       raise ValidationError('Please use a different email address')
+  
+class AdminSettingsForm(FlaskForm):
+  email = StringField('Email', validators=[DataRequired(), Email()])
+  submit = SubmitField('Update')
 
 class AddressForm(FlaskForm):
   email = StringField('Email', validators=[DataRequired(), Email()])
