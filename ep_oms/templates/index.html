@@ -1,3 +1,8 @@
 {% extends "base.html" %} {% block content %}
-<p>{{ order[0] }}</p>
+<select>
+  <option selected>Choose...</option>
+  {% for address in addresses %}
+  <option address-id="{{ address.id }}">{{ address.name }}</option>
+  {% endfor %}
+</select>
 {% endblock %}

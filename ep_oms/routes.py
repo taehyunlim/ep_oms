@@ -10,8 +10,8 @@ from ep_oms.models import Admin, Address
 @application.route('/index')
 @login_required
 def index():
-  order = [{'id': 1, 'name': 'TL'}, {'id': 2, 'name': 'BT'}]
-  return render_template('index.html', title='EP_OMS', order=order)
+  addresses = Address.query.all()
+  return render_template('index.html', title='EP_OMS', addresses=addresses)
 
 @application.route('/login', methods=['GET', 'POST'])
 def login():
