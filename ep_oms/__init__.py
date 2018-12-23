@@ -5,15 +5,21 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 import logging, os
 from logging.handlers import SMTPHandler, RotatingFileHandler
+from flask_bootstrap import Bootstrap
 
-
+# Main application instance
 application = Flask(__name__)
 application.config.from_object(Config)
+# Flask-SQLAlchemy
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
+# Flask-Login
 login = LoginManager(application)
 login.login_view = 'login'
+# Flask-Bootstrap
+bootstrap = Bootstrap(application)
 
+# Import modules 
 from ep_oms import routes, models, errors
 
 # Error Logging: Email
