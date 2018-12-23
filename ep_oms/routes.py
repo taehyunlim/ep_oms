@@ -39,7 +39,7 @@ def logout():
   return redirect(url_for('index'))
 
 @application.route('/signup', methods=['GET', 'POST'])
-def register():
+def signup():
   if current_user.is_authenticated:
     return redirect(url_for('index'))
   form = SignupForm()
