@@ -1,9 +1,34 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
 {% block app_content %}
-<select>
-  <option selected>Choose...</option>
-  {% for address in addresses %}
-  <option address-id="{{ address.id }}">{{ address.name }}</option>
-  {% endfor %}
-</select>
+<row>
+  <div class="col-sm-4">
+    <select>
+      <option selected>Choose...</option>
+      {% for address in addresses %}
+      <option address-id="{{ address.id }}">{{ address.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-4">
+    <select>
+      <option selected>Choose...</option>
+      {% for address in addresses %}
+      <option address-id="{{ address.id }}">{{ address.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-4">
+    <select>
+      <option selected>Choose...</option>
+      {% for address in addresses %}
+      <option address-id="{{ address.id }}">{{ address.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</row>
+{% for address in addresses %}
+  {% include '_address.html' %}
+{% endfor %}
 {% endblock %}

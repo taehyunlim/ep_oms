@@ -1,0 +1,22 @@
+<row>
+  <div class="col-sm-4">
+    <table class="table table-hover">
+      <tr>
+        <td>
+          {{ address.name }}
+        </td>
+        <td>
+          {% if address.company %}{{ address.company }}{% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ address.street1 }}
+        </td>
+        <td>
+          {{ address.street2 }}
+        </td>
+      </tr>
+    </table>
+  </div>
+</row>
