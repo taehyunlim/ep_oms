@@ -52,18 +52,18 @@ def signup():
     return redirect(url_for('login'))
   return render_template('signup.html', title='Signup', form=form)
 
-@application.route('/_admin_settings', methods=['GET', 'POST'])
+@application.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
-def _admin_settings():
+def admin_settings():
   form = AdminSettingsForm(current_user.email)
   if form.validate_on_submit():
     current_user.email = form.email.data
     db.session.commit()
     flash('Updated successfully')
-    return redirect(url_for('_admin_settings'))
+    return redirect(url_for('admin_settings'))
   elif request.method == 'GET':
     form.email.data = current_user.email
-  return render_template('_admin_settings.html', title='Admin Settings', form=form)
+  return render_template('admin_settings.html', title='Admin Settings', form=form)
 
 @application.route('/address', methods=['GET', 'POST'])
 @login_required
