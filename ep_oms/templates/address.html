@@ -3,9 +3,39 @@
 
 {% block app_content %}
 <h3>Address</h3>
-<div class="row">
-  <div class="col-md-4">
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#newAddress" aria-controls="newAddress" role="tab" data-toggle="tab">Add a new address</a></li>
+  <li><a href="#previewEditAddress" aria-controls="previewEditAddress" role="tab" data-toggle="tab">Edit an existing address</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="row tab-content">
+  <br>
+  <div role="tabpanel" class="col-md-4 tab-pane active" id="newAddress">
     {{ wtf.quick_form(form) }}
+  </div>
+  <div role="tabpanel" class="col-md-4 tab-pane" id="previewEditAddress">
+    <a href="#" class="btn btn-default btn-sm pull-right" id="edit-addr" role="button" disabled="disabled" style="margin-left: 5px;">Edit</a> 
+    <a href="#" class="btn btn-default btn-sm pull-right" id="delete-addr" role="button" disabled="disabled">Delete</a>
+    <div class="dropdown" style="width: 50%;">
+      <button class="btn btn-default btn-sm dropdown-toggle" id="addr-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="label-text">Choose one</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" id="addr-dropdown-btn" aria-labelledby="dLabel">
+        {% for address in addresses %}
+        <li class="addr-li" id="addr-li-{{ address.id }}"><a>{{ address.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <br>
+    <!-- Preview Address -->
+    <div class="well well-sm">
+      {% for address in addresses %}
+        {% include '_address.html' %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 
