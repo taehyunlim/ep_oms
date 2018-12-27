@@ -1,22 +1,7 @@
-<row>
-  <div class="col-sm-4">
-    <table class="table table-hover">
-      <tr>
-        <td>
-          {{ address.name }}
-        </td>
-        <td>
-          {% if address.company %}{{ address.company }}{% endif %}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {{ address.street1 }}
-        </td>
-        <td>
-          {{ address.street2 }}
-        </td>
-      </tr>
-    </table>
-  </div>
-</row>
+<div class="addr-preview" id="addr-preview-{{ address.id }}" style="display: none;">
+  <i>{{ address.name }}</i><br>
+  {% if address.company %}{{ address.company }}}<br>{% endif %}
+  {{ address.street1 }}<br>
+  {{ address.street2 }}{% if address.street3 %}{{ address.street3 }}{% endif %}<br>
+  {{ address.city }} {{ address.state }} {{ address.zip }}
+</div>
