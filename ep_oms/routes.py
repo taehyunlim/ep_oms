@@ -76,9 +76,10 @@ def admin_settings():
     form.email.data = current_user.email
   return render_template('admin_settings.html', title='Admin Settings', form=form)
 
-@application.route('/address', methods=['GET', 'POST'])
+@application.route('/address/new', methods=['GET', 'POST'])
 @login_required
 def address():
+  addresses = Address.query.all()
   form = AddressForm()
   if form.validate_on_submit():
     address = Address(
@@ -93,6 +94,37 @@ def address():
     )
     db.session.add(address)
     db.session.commit()
-    flash("Address for {} successfully saved".format(form.name.data))
-    return redirect(url_for('index'))
-  return render_template('address.html', title='Address', form=form)
+    flash("Address for {} successfully saved.".format(form.name.data))
+    return redirect(url_for('address'))
+  return render_template('address.html', title='Address', form=form, addresses=addresses)
+
+@application.route('/address/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_address(id):
+  existing_addr = Address.query.filter_by(id=id).first()
+  if existing_addr is None:
+      flash('The address does not exist.')
+      return redirect(url_for('address'))
+  form = AddressForm()
+  if form.validate_on_submit():
+    existing_addr.email = form.email.data
+    existing_addr.name = form.name.data
+    existing_addr.street1 = form.street1.data
+    existing_addr.street2 = form.street2.data
+    existing_addr.street3 = form.street3.data
+    existing_addr.city = form.city.data
+    existing_addr.state = form.state.data
+    existing_addr.zip = form.zip.data
+    db.session.commit()
+    flash("Successfully updated.")
+    return redirect(url_for('address'))
+  elif request.method == 'GET':
+    form.email.data = existing_addr.email
+    form.name.data = existing_addr.name
+    form.street1.data = existing_addr.street1
+    form.street2.data = existing_addr.street2
+    form.street3.data = existing_addr.street3
+    form.city.data = existing_addr.city
+    form.state.data = existing_addr.state
+    form.zip.data = existing_addr.zip
+  return render_template('edit_address.html', title='Address', form=form)
