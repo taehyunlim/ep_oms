@@ -1,50 +1,101 @@
 {% extends 'bootstrap/base.html' %}
-
 {% block title %}
-    {% if title %}{{ title }} - EP_OMS{% else %}EP_OMS{% endif %}
+  {% if title %}{{ title }} - EP_OMS{% else %}EP_OMS{% endif %}
 {% endblock %}
-
 {% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">EP_OMS</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('index') }}">Main</a></li>
-                    <li><a href="{{ url_for('address') }}">Address</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('admin_settings', email=current_user.email) }}">Settings</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-{% endblock %}
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span> <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('index') }}">EP_OMS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{{ url_for('index') }}">Main</a></li>
+        <li><a href="{{ url_for('address') }}">Address</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_anonymous %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        {% else %}
+        <li>
+          <a href="{{ url_for('admin_settings', email=current_user.email) }}">Settings</a>
+        </li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %} 
 
 {% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
+<div class="container">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %} 
+  {% for message in messages %}
+  <div class="alert alert-info" role="alert">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %} 
+  
+  {% block app_content %}{% endblock %}
+</div>
+{% endblock %} 
 
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    </div>
+{% block scripts %}
+{{ super() }}
+<script>
+  $(function() {
+    console.log("Hello, EP_OMS")
+  })
+
+  // Handle "select" event
+  $("#addr-dropdown-btn .addr-li").click(function(e) {
+      e.preventDefault()
+      // Grab the address id and name
+      const text = $(e.target).text()
+      const address_id = $(e.target).parent().attr('id').replace("addr-li-", "")
+      // Set addr-id data attribute
+      $("#addr-dropdown-label").attr("addr-id", address_id)
+      // Replace the dropdown label and show preview
+      $("#addr-dropdown-label .label-text").first().text(text)
+      $(".addr-preview").hide()
+      const preview_id = "addr-preview-" + address_id
+      $("#" + preview_id).show()
+      // Re-enable confirm button
+      $("#confirm-addr").removeAttr('disabled')
+  });
+  // Handle "confirm" event
+  $("#confirm-addr").click(function(e) {
+      e.preventDefault()
+      // Hide confirm button and show remove button
+      $("#confirm-addr").hide()
+      $("#remove-addr").show()
+      // Hide dropdown and show a check mark
+      $("#addr-dropdown-label").hide()
+      $("#addr-title #addr-checked").show()
+      // Accordian controls
+      $("#collapseAddress").collapse('hide')
+      $("#collapseProduct").collapse('show')
+  })
+  // Handle "remove" event
+  $("#remove-addr").click(function(e) {
+      e.preventDefault()
+      // Reverse confirm action and select action
+      $("#confirm-addr").show()
+      $("#confirm-addr").attr('disabled','disabled')
+      $("#remove-addr").hide()
+      $("#addr-dropdown-label").show()
+      $(".addr-preview").hide()
+      $("#addr-title #addr-checked").hide()
+      // Reset dropdown menu
+      $("#addr-dropdown-label").removeAttr("addr-id")
+      $("#addr-dropdown-label .label-text").first().text("Choose one")
+  })
+</script>
 {% endblock %}
