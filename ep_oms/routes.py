@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from ep_oms import application, db
 from ep_oms.forms import AddressForm, LoginForm, SignupForm, AdminSettingsForm
-from ep_oms.models import Admin, Address
+from ep_oms.models import Admin, Address, LineItem, Product, Shipment, Parcel
 
 
 @application.route('/')
@@ -12,6 +12,17 @@ from ep_oms.models import Admin, Address
 def index():
   addresses = Address.query.all()
   return render_template('index.html', title='EP_OMS', addresses=addresses)
+
+@application.route('/order')
+@login_required
+def order():
+  addresses = Address.query.all()
+  line_items = LineItem.query.all()
+  products = Product.query.all()
+  parcels = Parcel.query.all()
+  shipments = Shipment.query.all()
+  address_form = AddressForm()
+  return render_template('order.html', title="Create an order", addresses=addresses, line_items=line_items, products=products, address_form=address_form)
 
 @application.route('/login', methods=['GET', 'POST'])
 def login():
