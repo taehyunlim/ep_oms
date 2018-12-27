@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<row>  
+
+  <div class="col-md-12">
+    <h3 class="page-header">Create a New Order</h3>
+  </div>
+  <div class="col-md-6 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a id="addr-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseAddress" aria-expanded="true" aria-controls="collapseAddress">
+            1. Recipient Address
+            <span id="addr-checked" style="display: none;">✔️</span>
+          </a>
+        </h4>
+      </div>
+      <div id="collapseAddress" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" id="addr-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="label-text">Choose one</span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="addr-dropdown-btn" aria-labelledby="dLabel">
+              <li><a href="/address">Add New</a></li>
+              <li role="separator" class="divider"></li>
+              {% for address in addresses %}
+              <li class="addr-li" id="addr-li-{{ address.id }}"><a>{{ address.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <br>
+          <!-- Preview Address -->
+          <div class="well well-sm">
+            {% for address in addresses %}
+              {% include '_address.html' %}
+            {% endfor %}
+          </div>
+          <button class="btn btn-default btn-sm pull-right" id="confirm-addr" disabled="disabled">Confirm</button>
+          <button class="btn btn-default btn-sm pull-right" id="remove-addr" style="display: none;">Remove</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingTwo">
+        <h4 class="panel-title">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseProduct" aria-expanded="false" aria-controls="collapseProduct">
+            2. Products
+          </a>
+        </h4>
+      </div>
+      <div id="collapseProduct" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body">
+          Products Body
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingThree">
+        <h4 class="panel-title">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOption" aria-expanded="false" aria-controls="collapseOption">
+            3. Options
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOption" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+        <div class="panel-body">
+          Options Body
+        </div>
+      </div>
+    </div>
+  </div>
+
+</row>
+{% for address in addresses %}
+  {% include '_address.html' %}
+{% endfor %}
+{% for product in products %}
+  {{ product.sku }}
+{% endfor %}
+{% endblock %}
