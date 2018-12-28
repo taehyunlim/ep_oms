@@ -2,7 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<h3>Address</h3>
+<h3 class="page-header">Address</h3>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
   <li><a href="{{ url_for('address') }}">Add a new address</a></li>
@@ -12,7 +12,7 @@
 <!-- Tab panes -->
 <div class="row tab-content">
   <br>
-  <div role="tabpanel" class="col-md-4 tab-pane active" id="newAddress">
+  <div role="tabpanel" class="col-md-6 tab-pane active" id="newAddress">
     {{ wtf.quick_form(form) }}
   </div>
 </div>

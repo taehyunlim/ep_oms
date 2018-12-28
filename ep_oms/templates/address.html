@@ -2,7 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<h3>Address</h3>
+<h3 class="page-header">Address</h3>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
   <li class="active"><a href="#newAddress" aria-controls="newAddress" role="tab" data-toggle="tab">Add a new address</a></li>
@@ -12,12 +12,12 @@
 <!-- Tab panes -->
 <div class="row tab-content">
   <br>
-  <div role="tabpanel" class="col-md-4 tab-pane active" id="newAddress">
+  <div role="tabpanel" class="col-md-6 tab-pane active" id="newAddress">
     {{ wtf.quick_form(form) }}
   </div>
-  <div role="tabpanel" class="col-md-4 tab-pane" id="previewEditAddress">
-    <a href="#" class="btn btn-default btn-sm pull-right" id="edit-addr" role="button" disabled="disabled" style="margin-left: 5px;">Edit</a> 
-    <a href="#" class="btn btn-default btn-sm pull-right" id="delete-addr" role="button" disabled="disabled">Delete</a>
+  <div role="tabpanel" class="col-md-6 tab-pane" id="previewEditAddress">
+    <a href="#" class="btn btn-default btn-sm pull-right" id="delete-addr" role="button" disabled="disabled" style="margin-left: 5px;">Delete</a>
+    <a href="#" class="btn btn-default btn-sm pull-right" id="edit-addr" role="button" disabled="disabled">Edit</a> 
     <div class="dropdown" style="width: 50%;">
       <button class="btn btn-default btn-sm dropdown-toggle" id="addr-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="label-text">Choose one</span>
