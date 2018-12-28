@@ -73,12 +73,33 @@
       </div>
     </div>
   </div>
+  <!-- Order Summary -->
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">Order Summary</div>
+      <div class="panel-body">
+        <h5>Recipient</h5>
+        {% for address in addresses %}
+          {% include '_address.html' %}
+        {% endfor %}
+      </div>
+      <!-- Order Summary: Product Table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Line #</th><th>SKU</th><th>Description</th><th>Dim/Wt</th><th>Qty</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <th scope="row"></th><td>{{ product.sku }}</td><td>{{ product.description }}</td><td>1x1x1x1 / 420 </td><td>1</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 </row>
-{% for address in addresses %}
-  {% include '_address.html' %}
-{% endfor %}
-{% for product in products %}
-  {{ product.sku }}
-{% endfor %}
 {% endblock %}
