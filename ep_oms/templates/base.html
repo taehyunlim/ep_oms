@@ -16,6 +16,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{{ url_for('index') }}">Main</a></li>
+        <li><a href="{{ url_for('order') }}">Order</a></li>
         <li><a href="{{ url_for('address') }}">Address</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -69,6 +70,11 @@
       $("#" + preview_id).show()
       // Re-enable confirm button
       $("#confirm-addr").removeAttr('disabled')
+      // Delete/Edit action
+      $("#delete-addr").removeAttr('disabled')
+      $("#edit-addr").removeAttr('disabled')
+      $("#delete-addr").attr('href', `/address/${address_id}/delete`)
+      $("#edit-addr").attr('href', `/address/${address_id}/edit`)
   });
   // Handle "confirm" event
   $("#confirm-addr").click(function(e) {
