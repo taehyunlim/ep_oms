@@ -2,6 +2,12 @@
 {% block title %}
   {% if title %}{{ title }} - EP_OMS{% else %}EP_OMS{% endif %}
 {% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
 {% block navbar %}
 <nav class="navbar navbar-default">
   <div class="container">
@@ -46,9 +52,9 @@
   
   {% block app_content %}{% endblock %}
 </div>
-<footer class="panel-footer navbar-fixed-bottom">
-  <div class="navbar-right" style="padding-right: 20px;">
-    <small>EP_OMS © 2019 All Rights Reserved</small>
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted text-footer"><small>EP_OMS  © 2019 All Rights Reserved</small></p>
   </div>
 </footer>
 {% endblock %} 
@@ -71,8 +77,8 @@
       // Replace the dropdown label and show preview
       $("#addr-dropdown-label .label-text").first().text(text)
       $(".addr-preview").hide()
-      const preview_id = "addr-preview-" + address_id
-      $("#" + preview_id).show()
+      const preview_attr = `address[data-id='${address_id}']`
+      $(preview_attr).show()
       // Re-enable confirm button
       $("#confirm-addr").removeAttr('disabled')
       // Delete/Edit action
