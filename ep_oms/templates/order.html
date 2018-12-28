@@ -20,12 +20,12 @@
       <div id="collapseAddress" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
           <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" id="addr-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-default btn-sm dropdown-toggle" id="addr-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="label-text">Choose one</span>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="addr-dropdown-btn" aria-labelledby="dLabel">
-              <li><a href="/address">Add New</a></li>
+              <li><a href="{{ url_for('address') }}">Add New</a></li>
               <li role="separator" class="divider"></li>
               {% for address in addresses %}
               <li class="addr-li" id="addr-li-{{ address.id }}"><a>{{ address.name }}</a></li>
