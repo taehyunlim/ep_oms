@@ -1,5 +1,5 @@
-<address class="addr-preview" id="addr-preview-{{ address.id }}" style="display: none;">
-  <strong>{{ address.name }}</strong> ({{ address.email }})<br>
+<address class="addr-preview" data-id="{{ address.id }}" style="display: none;">
+  {{ address.name }} ({{ address.email }})<br>
   {% if address.company %}{{ address.company }}}<br>{% endif %}
   {{ address.street1 }}<br>
   {{ address.street2 }}{% if address.street3 %}{{ address.street3 }}{% endif %}<br>
