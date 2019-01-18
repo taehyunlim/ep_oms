@@ -47,6 +47,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.vscode/
+ep_oms/.vscode
 
 # Babel test
 test.p
