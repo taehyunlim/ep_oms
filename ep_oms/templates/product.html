@@ -1,0 +1,51 @@
+{% extends "base.html" %} 
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<h3 class="page-header">Product</h3>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#newProduct" aria-controls="newProduct" role="tab" data-toggle="tab">Add a new product</a></li>
+  <li><a href="#previewEditProduct" aria-controls="previewEditProduct" role="tab" data-toggle="tab">Edit an existing product</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="row tab-content">
+  <br>
+  <div role="tabpanel" class="col-md-6 tab-pane active" id="newProduct">
+    {{ wtf.quick_form(form) }}
+  </div>
+  <div role="tabpanel" class="col-md-6 tab-pane" id="previewEditProduct">
+    <a href="#" class="btn btn-default btn-sm pull-right" id="delete-product" role="button" disabled="disabled" style="margin-left: 5px;">Delete</a>
+    <a href="#" class="btn btn-default btn-sm pull-right" id="edit-product" role="button" disabled="disabled">Edit</a> 
+    <div class="dropdown" style="width: 50%;">
+      <button class="btn btn-default btn-sm dropdown-toggle" id="product-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="label-text">Choose one</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" id="product-dropdown-btn" aria-labelledby="dLabel">
+        {% for product in products %}
+        <li class="product-li" id="product-li-{{ product.id }}"><a>{{ product.sku }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <br>
+    <!-- Preview Product -->
+    <div class="well well-sm">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SKU</th><th>Description</th><th>Dim / Wt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+            {% include '_product.html' %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

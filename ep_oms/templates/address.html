@@ -23,7 +23,7 @@
         <span class="label-text">Choose one</span>
         <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" id="addr-dropdown-btn" aria-labelledby="dLabel">
+      <ul class="dropdown-menu" id="addr-dropdown-ul" aria-labelledby="dLabel">
         {% for address in addresses %}
         <li class="addr-li" id="addr-li-{{ address.id }}"><a>{{ address.name }}</a></li>
         {% endfor %}

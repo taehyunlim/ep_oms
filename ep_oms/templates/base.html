@@ -1,18 +1,15 @@
-{% extends 'bootstrap/base.html' %}
-{% block title %}
-  {% if title %}{{ title }} - EP_OMS{% else %}EP_OMS{% endif %}
-{% endblock %}
-
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-{% endblock %}
-
-{% block navbar %}
+{% extends 'bootstrap/base.html' %} {% block title %} {% if title %}{{
+title
+}}
+- EP_OMS{% else %}EP_OMS{% endif %} {% endblock %} {% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+{% endblock %} {% block navbar %}
 <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+        aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span> <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -24,6 +21,7 @@
         <li><a href="{{ url_for('index') }}">Main</a></li>
         <li><a href="{{ url_for('order') }}">Order</a></li>
         <li><a href="{{ url_for('address') }}">Address</a></li>
+        <li><a href="{{ url_for('product') }}">Product</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if current_user.is_anonymous %}
@@ -38,81 +36,172 @@
     </div>
   </div>
 </nav>
-{% endblock %} 
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="container">
-  {% with messages = get_flashed_messages() %}
-  {% if messages %} 
-  {% for message in messages %}
+  {% with messages = get_flashed_messages() %} {% if messages %} {% for message
+  in messages %}
   <div class="alert alert-info" role="alert">{{ message }}</div>
-  {% endfor %}
-  {% endif %}
-  {% endwith %} 
-  
-  {% block app_content %}{% endblock %}
+  {% endfor %} {% endif %} {% endwith %} {% block app_content %}{% endblock %}
 </div>
 <footer class="footer">
   <div class="container">
-    <p class="text-muted text-footer"><small>EP_OMS  © 2019 All Rights Reserved</small></p>
+    <p class="text-muted text-footer">
+      <small>EP_OMS © 2019 All Rights Reserved</small>
+    </p>
   </div>
 </footer>
-{% endblock %} 
-
-{% block scripts %}
-{{ super() }}
+{% endblock %} {% block scripts %} {{ super() }}
 <script>
-  $(function() {
-    console.log("Hello, EP_OMS")
-  })
+  $(function () {
+    console.log("Hello, EP_OMS");
+  });
 
+  // Custom DOM manipulation for Address component
   // Handle "select" event
-  $("#addr-dropdown-btn .addr-li").click(function(e) {
-      e.preventDefault()
-      // Grab the address id and name
-      const text = $(e.target).text()
-      const address_id = $(e.target).parent().attr('id').replace("addr-li-", "")
-      // Set addr-id data attribute
-      $("#addr-dropdown-label").attr("addr-id", address_id)
-      // Replace the dropdown label and show preview
-      $("#addr-dropdown-label .label-text").first().text(text)
-      $(".addr-preview").hide()
-      const preview_attr = `address[data-id='${address_id}']`
-      $(preview_attr).show()
-      // Re-enable confirm button
-      $("#confirm-addr").removeAttr('disabled')
-      // Delete/Edit action
-      $("#delete-addr").removeAttr('disabled')
-      $("#edit-addr").removeAttr('disabled')
-      $("#delete-addr").attr('href', `/address/${address_id}/delete`)
-      $("#edit-addr").attr('href', `/address/${address_id}/edit`)
+  $("#addr-dropdown-ul .addr-li").click(function (e) {
+    e.preventDefault();
+    // Grab the address id and name
+    const name = $(e.target).text();
+    const address_id = $(e.target)
+      .parent()
+      .attr("id")
+      .replace("addr-li-", "");
+    console.log(address_id);
+    // Set addr-id data attribute
+    $("#addr-dropdown-label").attr("addr-id", address_id);
+    // Replace the dropdown label and show preview
+    $("#addr-dropdown-label .label-text")
+      .first()
+      .text(name);
+    $(".addr-preview").hide();
+    const preview_attr = `address[data-id='${address_id}']`;
+    $(preview_attr).show();
+    // Re-enable confirm button
+    $("#confirm-addr").removeAttr("disabled");
+    // Delete/Edit action
+    $("#delete-addr").removeAttr("disabled");
+    $("#edit-addr").removeAttr("disabled");
+    $("#delete-addr").attr("href", `/address/${address_id}/delete`);
+    $("#edit-addr").attr("href", `/address/${address_id}/edit`);
   });
   // Handle "confirm" event
-  $("#confirm-addr").click(function(e) {
-      e.preventDefault()
-      // Hide confirm button and show remove button
-      $("#confirm-addr").hide()
-      $("#remove-addr").show()
-      // Hide dropdown and show a check mark
-      $("#addr-dropdown-label").hide()
-      $("#addr-title #addr-checked").show()
-      // Accordian controls
-      $("#collapseAddress").collapse('hide')
-      $("#collapseProduct").collapse('show')
-  })
+  $("#confirm-addr").click(function (e) {
+    e.preventDefault();
+    // Hide confirm button and show remove button
+    $("#confirm-addr").hide();
+    $("#remove-addr").show();
+    // Hide dropdown and show a check mark
+    $("#addr-dropdown-label").hide();
+    $("#addr-title #addr-checked").show();
+    // Accordian controls
+    $("#collapseAddress").collapse("hide");
+    $("#collapseProduct").collapse("show");
+  });
   // Handle "remove" event
-  $("#remove-addr").click(function(e) {
-      e.preventDefault()
-      // Reverse confirm action and select action
-      $("#confirm-addr").show()
-      $("#confirm-addr").attr('disabled','disabled')
-      $("#remove-addr").hide()
-      $("#addr-dropdown-label").show()
-      $(".addr-preview").hide()
-      $("#addr-title #addr-checked").hide()
-      // Reset dropdown menu
-      $("#addr-dropdown-label").removeAttr("addr-id")
-      $("#addr-dropdown-label .label-text").first().text("Choose one")
-  })
+  $("#remove-addr").click(function (e) {
+    e.preventDefault();
+    // Reverse confirm action and select action
+    $("#confirm-addr").show();
+    $("#confirm-addr").attr("disabled", "disabled");
+    $("#remove-addr").hide();
+    $("#addr-dropdown-label").show();
+    $(".addr-preview").hide();
+    $("#addr-title #addr-checked").hide();
+    // Reset dropdown menu
+    $("#addr-dropdown-label").removeAttr("addr-id");
+    $("#addr-dropdown-label .label-text")
+      .first()
+      .text("Choose one");
+  });
+
+  // Custom DOM manipulation for Product component
+  // Handle "multi-select" event
+  $("#product-dropdown-ul .product-li").click(function (e) {
+    e.preventDefault();
+    $(e.target)
+      .closest("li")
+      .hide();
+    // Grab the product id and sku
+    const sku = $(e.target).text();
+    const product_id = $(e.target)
+      .parent()
+      .attr("data-id");
+    // Clone a preview row with relevant product ID from DOM Store and add to Line Item Table
+    const _preview = `tr[data-id='${product_id}']`;
+    $(_preview)
+      .clone()
+      .removeClass("product-preview")
+      .addClass("line-item-preview")
+      .append(
+        `<td>
+          <input class="qty-spinner" type="number" min="1" value="1" />
+          <button type="button" class="btn btn-default btn-xs remove-line-item">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </td>`
+      )
+      .appendTo("#line-item-tbody")
+      .show();
+    // Re-enable confirm button
+    $("#confirm-product").removeAttr("disabled");
+    // Delete/Edit action
+    $("#change-product").removeAttr("disabled");
+    $("#edit-product").removeAttr("disabled");
+    $("#delete-product").attr("href", `/product/${product_id}/delete`);
+    $("#edit-product").attr("href", `/product/${product_id}/edit`);
+  });
+
+  // Handle "confirm" event
+  $("#confirm-product").click(function (e) {
+    e.preventDefault();
+    // Hide confirm button and show remove button
+    $("#confirm-product").hide();
+    $("#change-product").show();
+    // Hide dropdown and show a check mark
+    $("#product-dropdown-label").hide();
+    $("#product-title #product-checked").show();
+    // Accordian controls
+    $("#collapseProduct").collapse("hide");
+    $("#collapseOption").collapse("show");
+  });
+
+  // Handle "remove line item" event
+  $("#line-item-tbody").on("click", ".remove-line-item", function (e) {
+    // Grab product ID from the row data-id attribute
+    let product_id = $(e.target)
+      .closest("tr.line-item-preview")
+      .attr("data-id");
+    // Toggle dropdown menu list and remove the row
+    $(`li.product-li[data-id='${product_id}']`).show();
+    $(`tr.line-item-preview[data-id='${product_id}']`).remove();
+    // Disable confirm button if there is no line item selected
+    if ($(".line-item-preview").length < 1) {
+      $("#confirm-product").attr("disabled", "disabled");
+    }
+  });
+
+  // Handle "update" event
+
+  // Handle "remove" event
+  $("#remove-product").click(function (e) {
+    e.preventDefault();
+    // Reverse confirm action and select action
+    //
+    //
+    //
+    $("#confirm-product").show();
+    $("#confirm-product").attr("disabled", "disabled");
+    $("#remove-product").hide();
+    $("#product-dropdown-label").show();
+    $(".product-preview").hide();
+    $("#product-title #product-checked").hide();
+    // Reset dropdown menu
+    $("#product-dropdown-label").removeAttr("product-id");
+    $("#product-dropdown-label .label-text")
+      .first()
+      .text("Choose one");
+
+    //Handle line items
+  });
 </script>
 {% endblock %}

@@ -8,12 +8,13 @@
     <h3 class="page-header">Create a New Order</h3>
   </div>
   <div class="col-md-6 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <!-- 1. ADDRESS -->
     <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="headingOne">
         <h4 class="panel-title">
           <a id="addr-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseAddress" aria-expanded="true" aria-controls="collapseAddress">
             1. Recipient Address
-            <span id="addr-checked" style="display: none;">✔️</span>
+            <span id="addr-checked" class="glyphicon glyphicon-ok" aria-hidden="true" style="display: none;"></span>
           </a>
         </h4>
       </div>
@@ -24,7 +25,7 @@
               <span class="label-text">Choose one</span>
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" id="addr-dropdown-btn" aria-labelledby="dLabel">
+            <ul class="dropdown-menu" id="addr-dropdown-ul" aria-labelledby="dLabel">
               <li><a href="{{ url_for('address') }}">Add New</a></li>
               <li role="separator" class="divider"></li>
               {% for address in addresses %}
@@ -44,17 +45,48 @@
         </div>
       </div>
     </div>
+    <!-- 2. PRODUCTS -->
     <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingTwo">
+      <div class="panel-heading" role="tab" id="panel-heading-product">
         <h4 class="panel-title">
-          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseProduct" aria-expanded="false" aria-controls="collapseProduct">
+          <a id="product-title" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseProduct" aria-expanded="false" aria-controls="collapseProduct">
             2. Products
+            <span id="product-checked" class="glyphicon glyphicon-ok" aria-hidden="true" style="display: none;"></span>
           </a>
         </h4>
       </div>
-      <div id="collapseProduct" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div id="collapseProduct" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel-heading-product">
         <div class="panel-body">
-          Products Body
+          <br>
+          <!-- Preview product -->
+          <div class="well well-sm">
+          <div class="line-item-well">
+            <table class="table line-item-table">
+              <thead>
+                <tr>
+                  <th>SKU</th><th>Description</th><th>Dim / Wt</th><th>Qty</th>
+                </tr>
+              </thead>
+              <tbody id="line-item-tbody">
+              </tbody>
+            </table>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-default btn-sm dropdown-toggle" id="product-dropdown-label" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="label-text">Add</span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" id="product-dropdown-ul" aria-labelledby="dLabel">
+                <li><a href="{{ url_for('product') }}">Add New</a></li>
+                <li role="separator" class="divider"></li>
+                {% for product in products %}
+                <li class="product-li" data-id="{{ product.id }}"><a>{{ product.sku }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <button class="btn btn-default btn-sm pull-right" id="confirm-product" disabled="disabled">Confirm</button>
+          <button class="btn btn-default btn-sm pull-right" id="change-product" style="display: none;">Change</button>
         </div>
       </div>
     </div>
@@ -87,19 +119,24 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Line #</th><th>SKU</th><th>Description</th><th>Dim/Wt</th><th>Qty</th>
+            <th>Line No.</th><th>SKU</th><th>Description</th><th>Dim (In.) / Wt (Oz.)</th><th>Qty</th>
           </tr>
         </thead>
         <tbody>
-          {% for product in products %}
-          <tr>
-            <th scope="row"></th><td>{{ product.sku }}</td><td>{{ product.description }}</td><td>1x1x1x1 / 420 </td><td>1</td>
-          </tr>
-          {% endfor %}
+
         </tbody>
       </table>
     </div>
   </div>
+  <!-- DOM Data Store -->
+  <table class="table data-table" style="display: none;">
+    <tbody>
+      {% for product in products %}
+        {% include '_product.html' %}
+      {% endfor %}
+    </tbody>
+  </table>
+
 
 </row>
 {% endblock %}
