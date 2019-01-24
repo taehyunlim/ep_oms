@@ -16,9 +16,5 @@ class Config(object):
   MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
   MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
   MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-<<<<<<< HEAD
   ADMINS = ['tae@easypost.com']
   EP_API_KEY = os.environ.get('EP_API_KEY')
-=======
-  ADMINS = ['tae@easypost.com']
->>>>>>> 8e2c16900dd57f1c99931e14cb99f360013bcd67
