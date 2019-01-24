@@ -30,3 +30,36 @@ body {
   padding-right: 15px;
   padding-left: 15px;
 }
+
+/* Dropdown Menu */
+.dropdown-menu .divider {
+  margin: 4px 0;
+}
+/* Spinner Input Toggle Field Opacity */
+input.qty-spinner {
+  width: 50px;
+  height: 22px;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+/* Line Item Delete Button */
+.remove-line-item .glyphicon {
+  top: 2px;
+}
+/* Line Item Table */
+.table.line-item-table {
+  min-width: 450px;
+  margin-bottom: 10px;
+}
+.line-item-well {
+  overflow-x: auto;
+}
