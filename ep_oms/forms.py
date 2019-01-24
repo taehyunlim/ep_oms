@@ -60,7 +60,7 @@ class ProductForm(FlaskForm):
   width = FloatField('Width', validators=[DataRequired(), NumberRange(0,100)])
   height = FloatField('Height', validators=[DataRequired(), NumberRange(0,100)])
   price = FloatField('Price', validators=[DataRequired(), NumberRange(0,100)])
-  submitProduct = SubmitField('Save')
+  submit = SubmitField('Save')
 
   def validate_sku(self, sku):
     product = Product.query.filter_by(sku=self.sku.data).first()

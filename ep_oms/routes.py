@@ -2,8 +2,9 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from ep_oms import application, db
-from ep_oms.forms import AddressForm, LoginForm, SignupForm, AdminSettingsForm
+from ep_oms.forms import AddressForm, LoginForm, SignupForm, AdminSettingsForm, ProductForm
 from ep_oms.models import Admin, Address, LineItem, Product, Shipment, Parcel
+from ep_oms.api import ep_to_address
 
 
 @application.route('/')
@@ -82,6 +83,7 @@ def address():
   addresses = Address.query.all()
   form = AddressForm()
   if form.validate_on_submit():
+    # ep_address_id = ep_to_address(address)
     address = Address(
       name = form.name.data,
       email = form.email.data,
@@ -91,6 +93,7 @@ def address():
       city = form.city.data,
       state = form.state.data,
       zip = form.zip.data
+      # ep_address_id = ep_address_id
     )
     db.session.add(address)
     db.session.commit()
@@ -128,3 +131,24 @@ def edit_address(id):
     form.state.data = existing_addr.state
     form.zip.data = existing_addr.zip
   return render_template('edit_address.html', title='Address', form=form)
+
+@application.route('/product/new', methods=['GET', 'POST'])
+@login_required
+def product():
+  products = Product.query.all()
+  form = ProductForm()
+  if form.validate_on_submit():
+    product = Product(
+      sku = form.sku.data,
+      description = form.description.data,
+      weight = form.weight.data,
+      length = form.length.data,
+      width = form.width.data,
+      height = form.height.data,
+      price = form.price.data,
+    )
+    db.session.add(product)
+    db.session.commit()
+    flash("Product (SKU: {}) successfully saved.".format(form.sku.data))
+    return redirect(url_for('product'))
+  return render_template('product.html', title='Product', form=form, products=products)
