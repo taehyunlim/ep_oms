@@ -4,7 +4,7 @@ from werkzeug.urls import url_parse
 from ep_oms import application, db
 from ep_oms.forms import AddressForm, LoginForm, SignupForm, AdminSettingsForm, ProductForm
 from ep_oms.models import Admin, Address, LineItem, Product, Shipment, Parcel
-from ep_oms.api import ep_to_address
+# from ep_oms.api import ep_to_address
 
 
 @application.route('/')
